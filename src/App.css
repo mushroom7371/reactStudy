@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+div {
+  box-sizing: border-box;
+}
+.list {
+  padding-left: 20px;
+  text-align: left;
+  border-bottom: 1px solid grey;
+}
+
+.black-nav {
+  background-color: black;
+  color: white;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+}
