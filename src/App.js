@@ -15,9 +15,7 @@ function App() {
   return (
     <div className="App">
      <div className="black-nav">
-      <h4>
-        블로그임
-      </h4>
+      <h4>블로그임</h4> <button onClick={() => setTitleOfPosst(["여자 코트 추천", titleOfPost[1], titleOfPost[2]])}>첫번째 글 제목 바뀌는 버튼</button>
      </div>
      <div className='list'>
       <h4>{titleOfPost[0]}
