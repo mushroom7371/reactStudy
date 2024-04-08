@@ -8,7 +8,13 @@ function App() {
     "잠심 짜장면 맛집",
   ]);
   let [likeCount, setLikeCount] = useState([0, 0, 0]);
+  let [date, setDate] = useState([
+    "2024년 4월 6일",
+    "2024년 4월 6일",
+    "2024년 4월 6일",
+  ]);
   let [titleIndex, setTitleIndex] = useState(0);
+  let [title, setTitle] = useState("");
   let [modal, setModal] = useState(false);
   let changeTitle = () => {
     let copy = [...titleOfPost];
@@ -48,7 +54,8 @@ function App() {
             >
               {titleOfPost[i]}
               <span
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   let countCopy = [...likeCount];
                   countCopy[i]++;
                   setLikeCount(countCopy);
@@ -58,10 +65,55 @@ function App() {
               </span>
               {likeCount[i]}
             </h4>
-            <p>2024월 04월 06일 발생</p>
+            <p>{date[i]}</p>
+            <button
+              onClick={() => {
+                let copy = [...titleOfPost];
+                copy.splice(i, 1);
+                setTitleOfPosst(copy);
+                let copyLike = [...likeCount];
+                copyLike.splice(i, 1);
+                setLikeCount(copyLike);
+                let copyDate = [...date];
+                copyDate.splice(i, 1);
+                setDate(copyDate);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
+
+      <input
+        type="text"
+        onChange={(e) => {
+          setTitle(e.target.value);
+        }}
+      ></input>
+      <button
+        onClick={() => {
+          if (title === "") {
+            alert("제목을 입력해주세요");
+            return;
+          }
+          let copy = [...titleOfPost];
+          copy.unshift(title);
+          setTitleOfPosst(copy);
+          let copyLike = [...likeCount];
+          copyLike.unshift(0);
+          setLikeCount(copyLike);
+          let copyDate = [...date];
+          let currentDate = new Date();
+          let year = currentDate.getFullYear();
+          let month = currentDate.getMonth() + 1;
+          let day = currentDate.getDate();
+          copyDate.unshift(year + "년 " + month + "월 " + day + "일");
+          setDate(copyDate);
+        }}
+      >
+        글발행
+      </button>
 
       {modal ? (
         <Modal
