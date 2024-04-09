@@ -6,6 +6,8 @@ import shoes2 from "./img/shoes2.jpg";
 import shoes3 from "./img/shoes3.jpg";
 import { useState } from "react";
 import data from "./data";
+import { Route, Link, Routes } from "react-router-dom";
+import DetailPage from "./DetailPage";
 
 function App() {
   let [shoseData, setShoseData] = useState(data);
@@ -15,29 +17,40 @@ function App() {
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container style={{ marginLeft: "20px" }}>
-          <Navbar.Brand href="#home">Shop</Navbar.Brand>
+          <Navbar.Brand href="/">Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#cart">Cart</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Nav.Link href="#MyPage">MyPage</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
-      <div className="main-bg"></div>
-      <Container>
-        <Row>
-          {shoseData.map((a, i) => {
-            return (
-              <ShopComponent
-                shoseData={shoseData}
-                i={i}
-                shoseImage={shoseImage}
-              />
-            );
-          })}
-        </Row>
-      </Container>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="main-bg"></div>
+              <Container>
+                <Row>
+                  {shoseData.map((a, i) => {
+                    return (
+                      <ShopComponent
+                        key={i}
+                        shoseData={shoseData}
+                        i={i}
+                        shoseImage={shoseImage}
+                      />
+                    );
+                  })}
+                </Row>
+              </Container>
+            </>
+          }
+        />
+        <Route path="/detail" element={DetailPage()} />
+      </Routes>
     </div>
   );
 }
@@ -51,4 +64,5 @@ function ShopComponent(props) {
     </Col>
   );
 }
+
 export default App;
