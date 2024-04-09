@@ -4,8 +4,13 @@ import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import shoes1 from "./img/shoes1.jpg";
 import shoes2 from "./img/shoes2.jpg";
 import shoes3 from "./img/shoes3.jpg";
+import { useState } from "react";
+import data from "./data";
 
 function App() {
+  let [shoseData, setShoseData] = useState(data);
+  let [shoseImage, setShoseImage] = useState([shoes1, shoes2, shoes3]);
+
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
@@ -22,24 +27,28 @@ function App() {
       <div className="main-bg"></div>
       <Container>
         <Row>
-          <Col sm>
-            <img src={shoes1} width="80%" alt="신발1" />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col sm>
-            <img src={shoes2} width="80%" alt="신발2" />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col sm>
-            <img src={shoes3} width="80%" alt="신발3" />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
+          {shoseData.map((a, i) => {
+            return (
+              <ShopComponent
+                shoseData={shoseData}
+                i={i}
+                shoseImage={shoseImage}
+              />
+            );
+          })}
         </Row>
       </Container>
     </div>
+  );
+}
+
+function ShopComponent(props) {
+  return (
+    <Col sm>
+      <img src={props.shoseImage[props.i]} width="80%" alt="신발" />
+      <h4>{props.shoseData[props.i].title}</h4>
+      <p>{props.shoseData[props.i].price}</p>
+    </Col>
   );
 }
 export default App;
