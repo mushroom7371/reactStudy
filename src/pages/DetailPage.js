@@ -1,20 +1,23 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-
-let Btn = styled.button`
-  background: ${(props) => props.bg};
-  color: ${(props) => (props.bg === "blue" ? "white" : "black")};
-  padding: 10px;
-`;
 
 function DetailPage(props) {
+  useEffect(() => {
+    setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+  });
+
   let { id } = useParams();
   let product = props.shoseData.find((item) => item.id == id);
+  let [alert, setAlert] = useState(true);
 
   return (
     <div className="container">
-      <Btn bg="blue">버튼</Btn>
-      <Btn bg="yellow">버튼</Btn>
+      {alert ? (
+        <div className="alert alert-warning">2초 이내 구매시 할인</div>
+      ) : null}
+
       <div className="row">
         <div className="col-md-6">
           <img src={props.shoseImage[product.id]} width="100%" alt="신발" />

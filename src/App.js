@@ -94,8 +94,16 @@ function App() {
 }
 
 function ShopComponent(props) {
+  let navigate = useNavigate();
+
   return (
-    <Col sm>
+    <Col
+      onClick={() => {
+        let path = "/detail/" + props.shoseData[props.i].id;
+        navigate(path);
+      }}
+      sm
+    >
       <img src={props.shoseImage[props.i]} width="80%" alt="신발" />
       <h4>{props.shoseData[props.i].title}</h4>
       <p>{props.shoseData[props.i].price}</p>
