@@ -77,7 +77,7 @@ function App() {
         />
         <Route
           path="/detail/:id"
-          element={<DetailPage shoseData={shoseData} />}
+          element={<DetailPage shoseData={shoseData} shoseImage={shoseImage} />}
         />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} />

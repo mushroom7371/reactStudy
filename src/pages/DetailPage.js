@@ -2,20 +2,18 @@ import { useParams } from "react-router-dom";
 
 function DetailPage(props) {
   let { id } = useParams();
+  let product = props.shoseData.find((item) => item.id == id);
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6">
-          <img
-            src="https://codingapple1.github.io/shop/shoes1.jpg"
-            width="100%"
-          />
+          <img src={props.shoseImage[product.id]} width="100%" alt="신발" />
         </div>
         <div className="col-md-6">
-          <h4 className="pt-5">{props.shoseData[id].title}</h4>
-          <p>{props.shoseData[0].content}</p>
-          <p>{props.shoseData[0].price}</p>
+          <h4 className="pt-5">{product.title}</h4>
+          <p>{product.content}</p>
+          <p>{product.price}</p>
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
