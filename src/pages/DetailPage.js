@@ -6,11 +6,21 @@ function DetailPage(props) {
     setTimeout(() => {
       setAlert(false);
     }, 2000);
-  });
+  }, []);
 
   let { id } = useParams();
   let product = props.shoseData.find((item) => item.id == id);
   let [alert, setAlert] = useState(true);
+  let [inputData, setInputData] = useState(0);
+
+  useEffect(() => {
+    let str = inputData;
+    let checkNumber = /^[0-9]*$/;
+
+    if (!checkNumber.test(str)) {
+      window.alert("숫자를 입력하세요.");
+    }
+  }, [inputData]);
 
   return (
     <div className="container">
@@ -28,6 +38,12 @@ function DetailPage(props) {
           <p>{product.price}</p>
           <button className="btn btn-danger">주문하기</button>
         </div>
+        <input
+          id="inputText"
+          onChange={() => {
+            setInputData(document.getElementById("inputText").value);
+          }}
+        ></input>
       </div>
     </div>
   );
