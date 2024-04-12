@@ -1,4 +1,11 @@
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+let Btn = styled.button`
+  background: ${(props) => props.bg};
+  color: ${(props) => (props.bg === "blue" ? "white" : "black")};
+  padding: 10px;
+`;
 
 function DetailPage(props) {
   let { id } = useParams();
@@ -6,6 +13,8 @@ function DetailPage(props) {
 
   return (
     <div className="container">
+      <Btn bg="blue">버튼</Btn>
+      <Btn bg="yellow">버튼</Btn>
       <div className="row">
         <div className="col-md-6">
           <img src={props.shoseImage[product.id]} width="100%" alt="신발" />
