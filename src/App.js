@@ -1,18 +1,28 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
-import shoes1 from "./img/shoes1.jpg";
-import shoes2 from "./img/shoes2.jpg";
-import shoes3 from "./img/shoes3.jpg";
+import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import { useState } from "react";
 import data from "./data";
 import { Route, Link, Routes, useNavigate, Outlet } from "react-router-dom";
 import DetailPage from "./pages/DetailPage";
+import Axios from "axios";
+import Loding from "./loding";
 
 function App() {
   let [shoseData, setShoseData] = useState(data);
-  let [shoseImage, setShoseImage] = useState([shoes1, shoes2, shoes3]);
   let navigate = useNavigate();
+  let getShoseData = () => {
+    <Loding />;
+    Axios.get("https://codingapple1.github.io/shop/data2.json")
+      .then((result) => {
+        let copy = [...shoseData, ...result.data];
+        setShoseData(copy);
+      })
+      .catch((error) => {
+        window.alert("데이터를 가져오는데 실패했습니다.");
+      });
+    <Loding />;
+  };
 
   return (
     <div className="App">
@@ -59,15 +69,17 @@ function App() {
             <>
               <div className="main-bg"></div>
               <Container>
+                <Button
+                  onClick={() => {
+                    getShoseData();
+                  }}
+                >
+                  데이터 추가
+                </Button>
                 <Row>
                   {shoseData.map((a, i) => {
                     return (
-                      <ShopComponent
-                        key={i}
-                        shoseData={shoseData}
-                        i={i}
-                        shoseImage={shoseImage}
-                      />
+                      <ShopComponent key={i} shoseData={shoseData} i={i} />
                     );
                   })}
                 </Row>
@@ -77,7 +89,7 @@ function App() {
         />
         <Route
           path="/detail/:id"
-          element={<DetailPage shoseData={shoseData} shoseImage={shoseImage} />}
+          element={<DetailPage shoseData={shoseData} />}
         />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} />
@@ -95,6 +107,8 @@ function App() {
 
 function ShopComponent(props) {
   let navigate = useNavigate();
+  let imagePaths =
+    "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg";
 
   return (
     <Col
@@ -104,7 +118,7 @@ function ShopComponent(props) {
       }}
       sm
     >
-      <img src={props.shoseImage[props.i]} width="80%" alt="신발" />
+      <img src={imagePaths} width="80%" alt="신발" />
       <h4>{props.shoseData[props.i].title}</h4>
       <p>{props.shoseData[props.i].price}</p>
     </Col>

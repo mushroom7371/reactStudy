@@ -12,6 +12,8 @@ function DetailPage(props) {
   let product = props.shoseData.find((item) => item.id == id);
   let [alert, setAlert] = useState(true);
   let [inputData, setInputData] = useState(0);
+  let imagePaths =
+    "https://codingapple1.github.io/shop/shoes" + (product.id + 1) + ".jpg";
 
   useEffect(() => {
     let str = inputData;
@@ -30,7 +32,7 @@ function DetailPage(props) {
 
       <div className="row">
         <div className="col-md-6">
-          <img src={props.shoseImage[product.id]} width="100%" alt="신발" />
+          <img src={imagePaths} width="100%" alt="신발" />
         </div>
         <div className="col-md-6">
           <h4 className="pt-5">{product.title}</h4>
