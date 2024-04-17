@@ -1,7 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "./data";
 import { Route, Link, Routes, useNavigate, Outlet } from "react-router-dom";
 import DetailPage from "./pages/DetailPage";
@@ -168,7 +168,20 @@ function ShopComponent(props) {
 }
 
 function TabComponent({ tabIndex }) {
-  return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][tabIndex];
+  let [fade, setFade] = useState("");
+  useEffect(() => {
+    setTimeout(() => setFade("endTabContent"), 100);
+
+    return () => {
+      setFade("");
+    };
+  }, [tabIndex]);
+
+  return (
+    <div className={"startTabContent " + fade}>
+      {[<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][tabIndex]}
+    </div>
+  );
 }
 
 function About() {

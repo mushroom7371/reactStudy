@@ -4,8 +4,16 @@ import { useParams } from "react-router-dom";
 function DetailPage(props) {
   useEffect(() => {
     setTimeout(() => {
+      setFade("endDetailPage");
+    }, 100);
+
+    setTimeout(() => {
       setAlert(false);
     }, 2000);
+
+    return () => {
+      setFade("");
+    };
   }, []);
 
   let { id } = useParams();
@@ -14,6 +22,7 @@ function DetailPage(props) {
   let [inputData, setInputData] = useState(0);
   let imagePaths =
     "https://codingapple1.github.io/shop/shoes" + (product.id + 1) + ".jpg";
+  let [fade, setFade] = useState("");
 
   useEffect(() => {
     let str = inputData;
@@ -25,7 +34,7 @@ function DetailPage(props) {
   }, [inputData]);
 
   return (
-    <div className="container">
+    <div className={"container startDetailPage " + fade}>
       {alert ? (
         <div className="alert alert-warning">2초 이내 구매시 할인</div>
       ) : null}

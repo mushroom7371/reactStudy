@@ -43,3 +43,21 @@
     transform: rotate(360deg);
   }
 }
+
+.startTabContent {
+  opacity: 0;
+}
+
+.endTabContent {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.startDetailPage {
+  opacity: 0;
+}
+
+.endDetailPage {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
