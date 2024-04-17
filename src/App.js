@@ -11,12 +11,19 @@ import Loding from "./loding";
 function App() {
   let [shoseData, setShoseData] = useState(data);
   let navigate = useNavigate();
+  let [isAddedShoesData, setIsAddedShoesData] = useState(0);
+  let [tabIndex, setTabIndex] = useState(0);
   let getShoseData = () => {
+    let path =
+      "https://codingapple1.github.io/shop/data" +
+      (isAddedShoesData + 2) +
+      ".json";
     <Loding />;
-    Axios.get("https://codingapple1.github.io/shop/data2.json")
+    Axios.get(path)
       .then((result) => {
         let copy = [...shoseData, ...result.data];
         setShoseData(copy);
+        setIsAddedShoesData(isAddedShoesData + 1);
       })
       .catch((error) => {
         window.alert("데이터를 가져오는데 실패했습니다.");
@@ -69,13 +76,15 @@ function App() {
             <>
               <div className="main-bg"></div>
               <Container>
-                <Button
-                  onClick={() => {
-                    getShoseData();
-                  }}
-                >
-                  데이터 추가
-                </Button>
+                {isAddedShoesData === 2 ? null : (
+                  <Button
+                    onClick={() => {
+                      getShoseData();
+                    }}
+                  >
+                    데이터 추가
+                  </Button>
+                )}
                 <Row>
                   {shoseData.map((a, i) => {
                     return (
@@ -83,6 +92,39 @@ function App() {
                     );
                   })}
                 </Row>
+                <Nav variant="tabs" defaultActiveKey="0">
+                  <Nav.Item>
+                    <Nav.Link
+                      eventKey="0"
+                      onClick={() => {
+                        setTabIndex(0);
+                      }}
+                    >
+                      탭1
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      eventKey="1"
+                      onClick={() => {
+                        setTabIndex(1);
+                      }}
+                    >
+                      탭2
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      eventKey="2"
+                      onClick={() => {
+                        setTabIndex(2);
+                      }}
+                    >
+                      탭3
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+                <TabComponent tabIndex={tabIndex} />
               </Container>
             </>
           }
@@ -123,6 +165,10 @@ function ShopComponent(props) {
       <p>{props.shoseData[props.i].price}</p>
     </Col>
   );
+}
+
+function TabComponent({ tabIndex }) {
+  return [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][tabIndex];
 }
 
 function About() {
