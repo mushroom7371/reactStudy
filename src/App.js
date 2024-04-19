@@ -3,8 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import data from "./data";
-import { Route, Link, Routes, useNavigate, Outlet } from "react-router-dom";
+import { Route, Routes, useNavigate, Outlet } from "react-router-dom";
 import DetailPage from "./pages/DetailPage";
+import Cart from "./pages/Cart";
 import Axios from "axios";
 import Loding from "./loding";
 
@@ -46,7 +47,7 @@ function App() {
             </Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail");
+                navigate("/cart");
               }}
             >
               Cart
@@ -133,6 +134,7 @@ function App() {
           path="/detail/:id"
           element={<DetailPage shoseData={shoseData} />}
         />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} />
           <Route path="location" element={<div>위치정보임</div>} />
