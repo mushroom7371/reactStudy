@@ -1,13 +1,19 @@
 import { Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCount } from "../store";
 
 function Cart() {
   let product = useSelector((state) => {
     return state.product;
   });
 
+  let name = useSelector((state) => {
+    return state.user;
+  });
+
   return (
     <div>
+      <h1>{name}의 장바구니</h1>
       <Table>
         <thead>
           <tr>
@@ -28,12 +34,21 @@ function Cart() {
 }
 
 function TableRow(product) {
+  let dispatch = useDispatch();
   return (
     <tr>
       <td>1</td>
       <td>{product.product.name}</td>
       <td>{product.product.count}</td>
-      <td>hi~</td>
+      <td>
+        <button
+          onClick={() => {
+            dispatch(setCount({ id: product.product.id, count: 1 }));
+          }}
+        >
+          수량+
+        </button>
+      </td>
     </tr>
   );
 }
