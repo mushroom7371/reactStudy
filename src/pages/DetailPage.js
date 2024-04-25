@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { addProduct } from "../store";
+import { useDispatch, useSelector } from "react-redux";
 
 function DetailPage(props) {
   useEffect(() => {
@@ -17,12 +19,14 @@ function DetailPage(props) {
   }, []);
 
   let { id } = useParams();
+  let state = useSelector((state) => state);
   let product = props.shoseData.find((item) => item.id == id);
   let [alert, setAlert] = useState(true);
   let [inputData, setInputData] = useState(0);
   let imagePaths =
     "https://codingapple1.github.io/shop/shoes" + (product.id + 1) + ".jpg";
   let [fade, setFade] = useState("");
+  let dispatch = useDispatch();
 
   useEffect(() => {
     let str = inputData;
@@ -32,6 +36,11 @@ function DetailPage(props) {
       window.alert("숫자를 입력하세요.");
     }
   }, [inputData]);
+
+  function addCart() {
+    dispatch(addProduct({ id: product.id, name: product.title, count: 1 }));
+    console.log(state);
+  }
 
   return (
     <div className={"container startDetailPage " + fade}>
@@ -47,7 +56,14 @@ function DetailPage(props) {
           <h4 className="pt-5">{product.title}</h4>
           <p>{product.content}</p>
           <p>{product.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              addCart();
+            }}
+          >
+            주문하기
+          </button>
         </div>
         <input
           id="inputText"
